@@ -1,0 +1,1708 @@
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:101 fgapiserver <module> fgAPIServer is starting ...
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:102 fgapiserver <module> Configuration messages ...
+FutureGateway API Server config
+----------------------------------
+{
+    "fgapisrv_lnkptvflag": "True", 
+    "fgapisrv_secret": "0123456789ABCDEF", 
+    "fgjson_indent": "4", 
+    "fgapisrv_ptvuser": "tokenver_user", 
+    "fgapisrv_host": "0.0.0.0", 
+    "fgapisrv_db_host": "localhost", 
+    "fgapisrv_notoken": "True", 
+    "fgapisrv_key": "", 
+    "fgapisrv_db_name": "fgapiserver", 
+    "fgapisrv_debug": "True", 
+    "fgapisrv_crt": "", 
+    "fgapisrv_ptvdefgrp": "administrator", 
+    "fgapiserver_name": "FutureGateway API Server", 
+    "fgapisrv_geappid": "10000", 
+    "fgapiver": "v1.0", 
+    "fgapisrv_ptvdefusr": "futuregateway", 
+    "fgapisrv_logcfg": "fgapiserver_log.conf", 
+    "fgapisrv_port": "8888", 
+    "fgapisrv_ptvendpoint": "http://localhost:8889/checktoken", 
+    "fgapisrv_iosandbox": "/tmp", 
+    "fgapisrv_db_port": "3306", 
+    "fgapisrv_dbver": "0.0.10", 
+    "fgapisrv_ptvpass": "tokenver_pass", 
+    "fgapisrv_db_pass": "fgapiserver_password", 
+    "fgapisrv_ptvmapfile": "fgapiserver_ptvmap.json", 
+    "fgapisrv_notokenusr": "test", 
+    "fgapisrv_db_user": "fgapiserver"
+}
+
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:115 fgapiserverdb __init__ [DB settings]
+ host: 'localhost'
+ port: '3306'
+ user: 'fgapiserver'
+ pass: 'fgapiserver_password'
+ name: 'fgapiserver'
+ iosandbox_dir: '/tmp'
+ geapiserverappid: '10000'
+
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:205 fgapiserverdb get_db_version select version from db_patches order by id desc limit 1;
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+fgapiserver DB schema version: '0.0.10'
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:180 fgapiserver check_db_ver Check database version passed
+20170913 13:19:03 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:115 fgapiserverdb __init__ [DB settings]
+ host: 'localhost'
+ port: '3306'
+ user: 'fgapiserver'
+ pass: 'fgapiserver_password'
+ name: 'fgapiserver'
+ iosandbox_dir: '/tmp'
+ geapiserverappid: '10000'
+
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver_user.py:47 fgapiserver_user __init__ fgUser - id: '2' - name: 'test'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:115 fgapiserverdb __init__ [DB settings]
+ host: 'localhost'
+ port: '3306'
+ user: 'fgapiserver'
+ pass: 'fgapiserver_password'
+ name: 'fgapiserver'
+ iosandbox_dir: '/tmp'
+ geapiserverappid: '10000'
+
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:205 fgapiserverdb get_db_version select version from db_patches order by id desc limit 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+fgapiserver DB schema version: '0.0.10'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:180 fgapiserver check_db_ver Check database version passed
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2862 fgapiserverdb app_change update application set
+    name=hostname@toscaIDC,
+    description=hostname tester application on toscaIDC,
+    outcome=JOB,
+    enabled=True
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2872 fgapiserverdb app_change select file, path
+from application_file
+where app_id = 1
+  and (path is not null or path != '');
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2879 fgapiserverdb app_change Associated files for applciation [{'path': 'test/path', 'name': 'test'}]:
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2888 fgapiserverdb app_change delete from application_file
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2918 fgapiserverdb app_change insert into application_file
+    (app_id,
+     file_id,
+     file,
+     path,
+     override)
+    select 1,
+           if(max(file_id) is NULL,
+              1,max(file_id)+1),
+           tosca_template.yaml,
+           None,
+           TRUE
+    from application_file
+    where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2918 fgapiserverdb app_change insert into application_file
+    (app_id,
+     file_id,
+     file,
+     path,
+     override)
+    select 1,
+           if(max(file_id) is NULL,
+              1,max(file_id)+1),
+           tosca_test.sh,
+           None,
+           TRUE
+    from application_file
+    where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2961 fgapiserverdb app_change delete from application_parameter
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2985 fgapiserverdb app_change insert into application_parameter
+    (app_id,
+     param_id,
+     pname,
+     pvalue,
+     pdesc)
+    select 1,
+           if(max(param_id) is NULL,
+              1,max(param_id)+1),
+           target_executor,
+           ToscaIDC,
+           
+    from application_parameter
+    where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2985 fgapiserverdb app_change insert into application_parameter
+    (app_id,
+     param_id,
+     pname,
+     pvalue,
+     pdesc)
+    select 1,
+           if(max(param_id) is NULL,
+              1,max(param_id)+1),
+           jobdesc_executable,
+           tosca_test.sh,
+           unused
+    from application_parameter
+    where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2985 fgapiserverdb app_change insert into application_parameter
+    (app_id,
+     param_id,
+     pname,
+     pvalue,
+     pdesc)
+    select 1,
+           if(max(param_id) is NULL,
+              1,max(param_id)+1),
+           jobdesc_output,
+           stdout.txt,
+           unused
+    from application_parameter
+    where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2985 fgapiserverdb app_change insert into application_parameter
+    (app_id,
+     param_id,
+     pname,
+     pvalue,
+     pdesc)
+    select 1,
+           if(max(param_id) is NULL,
+              1,max(param_id)+1),
+           jobdesc_error,
+           stderr.txt,
+           unused
+    from application_parameter
+    where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2994 fgapiserverdb app_change select id from infrastructure where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3073 fgapiserverdb app_change select count(*)=1
+from infrastructure
+where app_id=0 and id=4;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3080 fgapiserverdb app_change Infrastructure 4 is not yet assigned
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3122 fgapiserverdb app_change update infrastructure
+set app_id = 1
+where id = 4 and app_id = 0;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3135 fgapiserverdb app_change select count(*)=1
+from infrastructure
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3142 fgapiserverdb app_change Infrastructure 1 is assigned only to application 1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3149 fgapiserverdb app_change update infrastructure
+set app_id = 0
+where id=1
+  and app_id=1;
+20170913 13:19:04 ERROR /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3172 fgapiserverdb app_change Unable to remove file: 'test/path/test'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:3181 fgapiserverdb app_change delete from application_file
+where app_id = 1
+  and file= test
+  and path = test/path;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Application having id '1' successfully changed
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1834 fgapiserverdb app_exists select count(*)
+from application
+where id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+App '1' existing is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:241 fgapiserverdb create_session_token select if(count(*)>0,uuid(),NULL) acctoken 
+from fg_user 
+where name=test and fg_user.password=password(test);
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:251 fgapiserverdb create_session_token insert into fg_token 
+  select 1, id, now() creation, 24*60*60 
+  from  fg_user 
+  where name=test 
+    and fg_user.password=password(test);
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+session token is '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' info: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1568 fgapiserverdb delete insert into as_queue (
+   task_id
+  ,target_id
+  ,target
+  ,action
+  ,status
+  ,target_status
+  ,creation
+  ,last_change
+  ,check_ts
+  ,action_info
+) select 1,
+         NULL,
+         (select target
+          from as_queue
+          where task_id=1
+          order by task_id asc
+          limit 1),
+         'CLEAN',
+         'QUEUED',
+         (select status
+          from as_queue
+          where task_id=1
+          order by task_id asc
+          limit 1),
+         now(),
+         now(),
+         now(),
+         /tmp/test;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1574 fgapiserverdb delete update task set status='CANCELLED', last_change=now() where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' successfully deleted
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1433 fgapiserverdb enqueue_task_request insert into as_queue (
+   task_id       
+  ,target_id     
+  ,target        
+  ,action        
+  ,status        
+  ,target_status 
+  ,creation      
+  ,last_change   
+  ,check_ts      
+  ,action_info   
+) values (1,
+          NULL,
+          GridEngine,
+          'SUBMIT',
+          'QUEUED',
+          NULL,
+          now(),
+          now(),
+          now(),
+          /tmp/test);
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1439 fgapiserverdb enqueue_task_request update task set status='SUBMIT', 
+last_change=now() where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'outcome': 'JOB', 'creation': '1970-01-01T00:00:00', 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'enabled': True, 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}' enqueued successfully
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1006 fgapiserverdb get_app_files select file
+      ,path
+      ,override
+from application_file
+where app_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Files for application '1': '[{'override': False, 'path': '/path/to/file1', 'file': 'test_app_file1'}, {'override': True, 'path': '/path/to/file2', 'file': 'test_app_file2'}]'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1861 fgapiserverdb get_app_list select id
+from application
+order by id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Application list: '[1]'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1894 fgapiserverdb get_app_record select name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1917 fgapiserverdb get_app_record select pname
+      ,pvalue
+      ,pdesc
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1932 fgapiserverdb get_app_record select file
+      ,path
+      ,override
+from application_file
+where app_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2454 fgapiserverdb get_infra_list select id
+from infrastructure
+where app_id = 1 order by id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure list for app '1': '['1']'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Application '1' record: '{'files': [{'override': False, 'path': '/path/to/file1', 'url': 'file?path=%2Fpath%2Fto%2Ffile1&name=test_app_file1', 'name': 'test_app_file1'}, {'override': True, 'path': '/path/to/file2', 'url': 'file?path=%2Fpath%2Fto%2Ffile2&name=test_app_file2', 'name': 'test_app_file2'}], 'creation': '1970-01-01T00:00:00', 'name': 'test_app', 'parameters': [{'name': 'test_param_name1', 'value': 'test_param_value1', 'description': 'test_param_desc1'}, {'name': 'test_param_name2', 'value': 'test_param_value2', 'description': 'test_param_desc2'}], 'outcome': 'JOB', 'enabled': True, 'id': '1', 'infrastructures': ['1'], 'description': 'test_app_desc'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1753 fgapiserverdb get_file_app_id select app_id from application_file
+where file=input.txt and path=/tmp
+union all
+select null;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+app_id for file name 'input.txt' having path '/tmp' is: '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1723 fgapiserverdb get_file_task_id select task_id from task_output_file
+where file=test_file and path=/tmp/testdir
+union all
+select task_id from task_input_file
+where file=test_file and path=/tmp/testdir
+union all
+select null;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+task_id for file name 'test_file' having path '/tmp/testdir' is: '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2492 fgapiserverdb get_infra_record select app_id,
+       name,
+       description,
+       date_format(creation,
+                   '%Y-%m-%dT%TZ') creation,
+       enabled,
+       vinfra
+from infrastructure
+where id=1
+order by 1 asc ,2 asc
+limit 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2517 fgapiserverdb get_infra_record select pname
+      ,pvalue
+      ,pdesc
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure '1': '{'name': 'test infra', 'parameters': [{'name': 'test_pname1', 'value': 'test_pvalue1', 'description': 'test_pdesc1'}, {'name': 'test_pname2', 'value': 'test_pvalue2', 'description': 'test_pdesc2'}, {'name': 'test_pname3', 'value': 'test_pvalue3', 'description': None}], 'description': 'test infrastructure', 'creation': '1970-01-01T00:00:00', 'enabled': False, 'id': '1', 'virtual': False, 'app_id': '0'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:505 fgapiserverdb get_ptv_groups select count(*) from fg_group where lower(name)=test_group1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:505 fgapiserverdb get_ptv_groups select count(*) from fg_group where lower(name)=test_group2;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Passed groups: '['test_group1', 'test_group2']' -> valid groups: '['test_group1', 'test_group2']'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' info: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:812 fgapiserverdb get_task_input_files select file
+      ,if(path is null,'NEEDED','READY') status
+from task_input_file
+where task_id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Input files for task '1': '({'status': 'READY', 'name': 'test_ifile_1'}, {'status': 'NEEDED', 'name': 'test_ifile_2'})'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1264 fgapiserverdb get_task_io_sandbox select iosandbox from task where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+IO sandbox for task '1': '/tmp/iosandbox'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1506 fgapiserverdb get_task_list select id
+from task
+where status != "PURGED"
+  and user = (1, 'test_user')
+  and app_id = 1
+;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task list for user '(1, 'test_user')', app '1': '[1]'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:844 fgapiserverdb get_task_output_files select file
+      ,if(path is null,'waiting','ready')
+from task_output_file
+where task_id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Output files for task '1': '({'status': 'ready', 'name': 'test_ofile_1'}, {'status': 'ready', 'name': 'test_ofile_2'})'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:469 fgapiserverdb get_user_info_by_name select id        
+      ,name      
+      ,password  
+      ,first_name
+      ,last_name 
+      ,institute 
+      ,mail      
+      ,creation  
+      ,modified  
+from fg_user     
+where name=test_user1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+User 'test_user1' info: '{'first_name': 'futuregateway', 'last_name': 'futuregateway', 'creation': '1970-01-01T00:00:00', 'name': 'futuregateway', 'institute': 'futuregateway', 'mail': 'futuregateway@futuregateway', 'password': 'XXXXYYYYZZZZ', 'id': '1', 'modified': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2791 fgapiserverdb infra_change update infrastructure set
+    name=Infra test (changed),
+    description=ansshifnra (changed),
+    enabled=False,
+    vinfra=True
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2800 fgapiserverdb infra_change delete from infrastructure_parameter
+where infra_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2824 fgapiserverdb infra_change insert into infrastructure_parameter
+    (infra_id,
+     param_id,
+     pname,
+     pvalue,
+     pdesc)
+    select 1,
+           if(max(param_id) is NULL,
+              1,max(param_id)+1),
+           jobservice,
+           ssh://fgtest,
+           fgtest ssh hots
+    from infrastructure_parameter
+    where infra_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure having id: '1' successfully changed
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2050 fgapiserverdb init_app insert into application (id
+                        ,name
+                        ,description
+                        ,outcome
+                        ,creation
+                        ,enabled)
+select if(max(id) is NULL,1,max(id)+1) -- new id
+      ,test application                              -- name
+      ,test application description                              -- description
+      ,JOB                              -- outcome
+      ,now()                           -- creation
+      ,True                              -- enabled
+from application;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2055 fgapiserverdb init_app select max(id) from application;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2079 fgapiserverdb init_app insert into application_parameter (app_id
+                                  ,param_id
+                                  ,pname
+                                  ,pvalue
+                                  ,pdesc)
+select 1                                          
+      ,if(max(param_id) is NULL,1,max(param_id)+1) 
+      ,test_param_name1                                          
+      ,test_param_value1                                          
+      ,test_param_desc1                                          
+from application_parameter
+where app_id=1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2079 fgapiserverdb init_app insert into application_parameter (app_id
+                                  ,param_id
+                                  ,pname
+                                  ,pvalue
+                                  ,pdesc)
+select 1                                          
+      ,if(max(param_id) is NULL,1,max(param_id)+1) 
+      ,test_param_name1                                          
+      ,test_param_value1                                          
+      ,test_param_desc1                                          
+from application_parameter
+where app_id=1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2122 fgapiserverdb init_app insert into application_file (app_id
+                            ,file_id
+                            ,file
+                            ,path
+                            ,override)
+select 1
+      ,if(max(file_id) is NULL,1,max(file_id)+1)
+      ,test_app_file1
+      ,''
+      ,TRUE
+from application_file
+where app_id=1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2122 fgapiserverdb init_app insert into application_file (app_id
+                            ,file_id
+                            ,file
+                            ,path
+                            ,override)
+select 1
+      ,if(max(file_id) is NULL,1,max(file_id)+1)
+      ,test_app_file2
+      ,''
+      ,TRUE
+from application_file
+where app_id=1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2212 fgapiserverdb init_app select app_id,
+       name,
+       description,
+       enabled,
+       vinfra
+from infrastructure
+where id=1
+order by 1 asc ,2 asc
+limit 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2253 fgapiserverdb init_app insert into infrastructure (id
+                           ,app_id
+                           ,name
+                           ,description
+                           ,creation
+                           ,enabled
+                           ,vinfra
+                           )
+values (1    
+       ,1    
+       ,test application    
+       ,test application description    
+       ,now() 
+       ,True    
+       ,False);
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Application successfully inserted with id '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2590 fgapiserverdb init_infra insert into infrastructure (id
+                           ,app_id
+                           ,name
+                           ,description
+                           ,creation
+                           ,enabled
+                           ,vinfra
+                           )
+select if(max(id) is NULL,1,max(id)+1)
+      ,0
+      ,Test infrastructure
+      ,Test infrastructure description
+      ,now()
+      ,True
+      ,False
+from infrastructure;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2595 fgapiserverdb init_infra select max(id) from infrastructure;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure successfully created with id '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1006 fgapiserverdb get_app_files select file
+      ,path
+      ,override
+from application_file
+where app_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Files for application '1': '[{'override': False, 'path': '/path/to/file1', 'file': 'test_app_file1'}, {'override': True, 'path': '/path/to/file2', 'file': 'test_app_file2'}]'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1035 fgapiserverdb init_task Application files for app_id 1 are: [{'override': False, 'path': '/path/to/file1', 'file': 'test_app_file1'}, {'override': True, 'path': '/path/to/file2', 'file': 'test_app_file2'}]
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1066 fgapiserverdb init_task insert into task (id
+                 ,creation
+                 ,last_change
+                 ,app_id
+                 ,description
+                 ,status
+                 ,user
+                 ,iosandbox)
+select if(max(id) is NULL,1,max(id)+1) -- new id
+      ,now()                           -- creation date
+      ,now()                           -- last change
+      ,1                              -- app_id
+      ,test_application                              -- description
+      ,'WAITING'                     -- status WAITING
+      ,test_user                              -- user
+      ,/tmp/1d61cbbc-9886-11e7-ab9c-fa163e876b0e                              -- iosandbox
+from task;
+
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1070 fgapiserverdb init_task select max(id) from task;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1086 fgapiserverdb init_task insert into task_arguments (task_id
+                           ,arg_id
+                           ,argument)
+select 1
+      ,if(max(arg_id) is NULL,1,max(arg_id)+1)
+      ,arg 1
+from task_arguments
+where task_id=1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1086 fgapiserverdb init_task insert into task_arguments (task_id
+                           ,arg_id
+                           ,argument)
+select 1
+      ,if(max(arg_id) is NULL,1,max(arg_id)+1)
+      ,arg 2
+from task_arguments
+where task_id=1
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1102 fgapiserverdb init_task Input files processing
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1105 fgapiserverdb init_task file: {'override': False, 'path': '/path/to/file1', 'name': 'test_ifile1'}
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1105 fgapiserverdb init_task file: {'override': True, 'path': '/path/to/file2', 'name': 'test_ifile2'}
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1326 fgapiserverdb is_input_sandbox_ready select   sum(if(path is NULL,0,1))=count(*) or count(*)=0 sb_ready
+from task_input_file
+where task_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+sandbox ready for task '1' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1690 fgapiserverdb is_overridden_sandbox select   if(sum(override) is NULL,     TRUE,     count(*)=sum(override)) override
+from application_file
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+overridden sandbox for app '1' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' info: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1433 fgapiserverdb enqueue_task_request insert into as_queue (
+   task_id       
+  ,target_id     
+  ,target        
+  ,action        
+  ,status        
+  ,target_status 
+  ,creation      
+  ,last_change   
+  ,check_ts      
+  ,action_info   
+) values (1,
+          NULL,
+          GridEngine,
+          'SUBMIT',
+          'QUEUED',
+          NULL,
+          now(),
+          now(),
+          now(),
+          /tmp/test);
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1439 fgapiserverdb enqueue_task_request update task set status='SUBMIT', 
+last_change=now() where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}' enqueued successfully
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2281 fgapiserverdb insert_or_update_app_file select count(*)
+from application_file
+where app_id = 1
+  and file = test_app_file;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2304 fgapiserverdb insert_or_update_app_file update application_file
+set path = test/file/path
+where app_id = 1
+  and file = test_app_file;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+insert or update of file 'test/file/path/test_app_file' for app '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1326 fgapiserverdb is_input_sandbox_ready select   sum(if(path is NULL,0,1))=count(*) or count(*)=0 sb_ready
+from task_input_file
+where task_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+sandbox ready for task '1' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1690 fgapiserverdb is_overridden_sandbox select   if(sum(override) is NULL,     TRUE,     count(*)=sum(override)) override
+from application_file
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+overridden sandbox for app '1' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1607 fgapiserverdb patch_task select count(*)
+from runtime_data
+where data_name=test_data_name1
+  and task_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1656 fgapiserverdb patch_task update runtime_data
+set data_value = test_data_value1
+   ,last_change = now()
+where data_name=test_data_name1
+  and task_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1607 fgapiserverdb patch_task select count(*)
+from runtime_data
+where data_name=test_data_name2
+  and task_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1656 fgapiserverdb patch_task update runtime_data
+set data_value = test_data_value2
+   ,last_change = now()
+where data_name=test_data_name2
+  and task_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Runtime data '[{'data_desc': 'test_data_desc1', 'data_name': 'test_data_name1', 'data_value': 'test_data_value1', 'data_type': 'test_data_type1', 'data_proto': 'test_data_proto1'}, {'data_desc': 'test_data_desc2', 'data_name': 'test_data_name2', 'data_value': 'test_data_value2', 'data_type': 'test_data_type2', 'data_proto': 'test_data_proto2'}]' successfully updated on task '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:537 fgapiserverdb register_ptv_subject select id, name from fg_user where name=test_user;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+PTV user 'test_user' record: '[1, 'test_user']'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:611 fgapiserverdb task_exists select name from fg_user where id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1506 fgapiserverdb get_task_list select id
+from task
+where status != "PURGED"
+  and user = test_user
+;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task list for user 'test_user', app 'None': '[1]'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1506 fgapiserverdb get_task_list select id
+from task
+where status != "PURGED"
+  and user = [1]
+;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task list for user '[1]', app 'None': '[1]'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' exists is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:318 fgapiserverdb register_token insert into 
+fg_token (token, subject, user_id, creation, expiry)
+select TESTSESSIONTOKEN, SUBJ, 1, now(), NULL
+from dual
+where (select count(*)
+       from fg_token
+       where token=TESTSESSIONTOKEN) = 0;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+token: 'TESTSESSIONTOKEN' successfully registered
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:430 fgapiserverdb same_group select count(*)>1               
+from fg_user_group              
+where user_id = (select id      
+                 from fg_user   
+                 where name=test_user1) 
+   or user_id = (select id      
+                 from fg_user   
+                 where name=test_user2) 
+group by group_id               
+having count(*) > 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+same group for user 'test_user1' and 'test_user2' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1804 fgapiserverdb status_change insert into as_queue (task_id,
+                      action,
+                      status,
+                      target,
+                      target_status,
+                      creation,
+                      last_change,
+                      check_ts,
+                      action_info
+)select 1,
+       "STATUSCH",
+       "QUEUED",
+       (select target
+        from as_queue
+        where task_id=1
+          and action="SUBMIT"),
+       TEST,
+       now(),
+       now(),
+       now(),
+       (select action_info
+        from as_queue
+        where task_id=1
+          and action='SUBMIT');
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Status change for task '1' successfully changed to 'TEST'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' info: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1433 fgapiserverdb enqueue_task_request insert into as_queue (
+   task_id       
+  ,target_id     
+  ,target        
+  ,action        
+  ,status        
+  ,target_status 
+  ,creation      
+  ,last_change   
+  ,check_ts      
+  ,action_info   
+) values (1,
+          NULL,
+          GridEngine,
+          'SUBMIT',
+          'QUEUED',
+          NULL,
+          now(),
+          now(),
+          now(),
+          /tmp/test);
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1439 fgapiserverdb enqueue_task_request update task set status='SUBMIT', 
+last_change=now() where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}' enqueued successfully
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:181 fgapiserverdb test SELECT VERSION()
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Database version : 'test'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:1296 fgapiserverdb update_input_sandbox_file update task_input_file
+set path=/path/to/file
+where task_id=1
+  and file=test_file1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+input sandbox for task '1' successfully updated
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:279 fgapiserverdb verify_session_token select if((creation+expiry)-now()>0,user_id,NULL) user_id
+      ,(select name from fg_user where id=user_id) name
+from fg_token
+where token=TESTSESSIONTOKEN;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+session token: 'TESTSESSIONTOKEN' -> user_id='1', user_name='test_user'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:394 fgapiserverdb verify_user_app select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,application    a  
+    ,fg_user_group ug  
+    ,fg_group_apps ga  
+where u.id=1          
+  and u.id=ug.user_id  
+  and a.id=1          
+  and a.id=ga.app_id   
+  and g.id=ug.group_id 
+  and g.id=ga.group_id;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+User id '1' access to application id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:355 fgapiserverdb verify_user_role select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,fg_user_group ug  
+    ,fg_group_role gr  
+    ,fg_role        r  
+where u.id=1          
+  and u.id=ug.user_id  
+  and g.id=ug.group_id 
+  and g.id=gr.group_id 
+  and r.id=gr.role_id  
+  and r.name = test_role;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+role(s) 'test_role' for user_id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:418 fgapiserver load_user LoadUser: begin
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:421 fgapiserver load_user LoadUser: notoken is true
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:469 fgapiserverdb get_user_info_by_name select id        
+      ,name      
+      ,password  
+      ,first_name
+      ,last_name 
+      ,institute 
+      ,mail      
+      ,creation  
+      ,modified  
+from fg_user     
+where name=test;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+User 'test' info: '{'first_name': 'futuregateway', 'last_name': 'futuregateway', 'creation': '1970-01-01T00:00:00', 'name': 'futuregateway', 'institute': 'futuregateway', 'mail': 'futuregateway@futuregateway', 'password': 'XXXXYYYYZZZZ', 'id': '1', 'modified': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:427 fgapiserver load_user LoadUser: Session token disabled; behaving has user: 'futuregateway' (1)
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver_user.py:47 fgapiserver_user __init__ fgUser - id: '1' - name: 'futuregateway'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:1823 fgapiserver infra_id infrastructures(DELETE)/1: {}
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:350 fgapiserver authorize_user AuthUser: (begin)
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:361 fgapiserver authorize_user AuthUser: user_id: '1' - user_name: 'futuregateway'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:355 fgapiserverdb verify_user_role select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,fg_user_group ug  
+    ,fg_group_role gr  
+    ,fg_role        r  
+where u.id=1          
+  and u.id=ug.user_id  
+  and g.id=ug.group_id 
+  and g.id=gr.group_id 
+  and r.id=gr.role_id  
+  and r.name = infra_delete;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+role(s) 'infra_delete' for user_id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:367 fgapiserver authorize_user AuthUser: Auth for user '1' with roles 'infra_delete' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2421 fgapiserverdb infra_exists select count(*)
+from infrastructure
+where id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure '1' exists is: True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2655 fgapiserverdb infra_delete select count(*)
+from application a
+    ,infrastructure i
+where i.app_id=a.id
+  and a.id != 0
+  and i.id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2730 fgapiserverdb infra_delete select count(*)
+from as_queue q
+    ,task t
+    ,application a
+    ,infrastructure i
+where i.app_id=a.id
+  and t.app_id=a.id
+  and q.task_id=t.id
+  and t.app_id=a.id
+  and q.status='RUNNING'
+  and i.id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2746 fgapiserverdb infra_delete delete from infrastructure_parameter
+where infra_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2754 fgapiserverdb infra_delete delete from infrastructure where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure '1' successfully deleted
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:653 fgapiserverdb get_task_record select  id
+,status
+,date_format(creation, '%Y-%m-%dT%TZ') creation
+,date_format(last_change, '%Y-%m-%dT%TZ') last_change
+,app_id
+,description
+,status
+,user
+,iosandbox
+from task
+where id=1
+  and status != "PURGED";
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:679 fgapiserverdb get_task_record select argument
+from task_arguments
+where task_id=1
+order by arg_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:695 fgapiserverdb get_task_record select file
+      ,if(path is null or length(path)=0,          'NEEDED',          'READY') status
+      ,if(path is NULL,'',path)
+from task_input_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:720 fgapiserverdb get_task_record select file
+      ,if(path is NULL,'',path)
+from task_output_file
+where task_id=1
+order by file_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:747 fgapiserverdb get_task_record select   data_name
+ ,data_value
+ ,data_desc
+ ,data_type
+ ,data_proto
+ ,date_format(creation,              '%Y-%m-%dT%TZ') creation
+ ,date_format(last_change,              '%Y-%m-%dT%TZ') last_change
+from runtime_data
+where task_id=1
+order by data_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' record: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': '1', 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:881 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,outcome
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,enabled
+from application
+where id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:900 fgapiserverdb get_app_detail select pname
+      ,pvalue
+from application_parameter
+where app_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:921 fgapiserverdb get_app_detail select id
+      ,name
+      ,description
+      ,date_format(creation, '%Y-%m-%dT%TZ') creation
+      ,if(enabled,'enabled','disabled') status
+      ,if(vinfra,'virtual','real') status
+from infrastructure
+where app_id=1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:942 fgapiserverdb get_app_detail select pname, pvalue
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Details for app '1': '{'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Task '1' info: '{'status': 'WAITING', 'description': 'test task', 'creation': '1970-01-01T00:00:00', 'iosandbox': '/tmp/test', 'user': 'test user', 'id': '1', 'output_files': [{'url': 'file?path=%2Ftmp&name=output_file_1', 'name': 'output_file_1'}, {'url': 'file?path=%2Ftmp&name=output_file_2', 'name': 'output_file_2'}], 'application': {'infrastructures': [{'status': 'enabled', 'description': 'test infrastructure for test application', 'parameters': [{'name': 'test_infra_param_name_1', 'value': 'test_infra_param_value_1'}, {'name': 'test_infra_param_name_2', 'value': 'test_infra_param_value_2'}], 'creation': '1970-01-01T00:00:00', 'virtual': 'real', 'id': '1', 'name': 'test infra'}], 'description': 'test application description', 'parameters': [{'param_name': 'test_pname1', 'param_value': 'test_pvalue1'}, {'param_name': 'test_pname2', 'param_value': 'test_pvalue2'}], 'creation': '1970-01-01T00:00:00', 'enabled': True, 'outcome': 'JOB', 'id': '1', 'name': 'test application'}, 'arguments': ['argument'], 'runtime_data': [{'name': 'userdata_name_1', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_1', 'type': 'NULL', 'description': 'userdata_desc_1'}, {'name': 'userdata_name_2', 'proto': 'NULL', 'last_change': '1970-01-01T00:00:00', 'creation': '1970-01-01T00:00:00', 'value': 'userdata_value_2', 'type': 'NULL', 'description': 'userdata_desc_2'}], 'input_files': [{'status': 'NEEDED', 'name': 'input_file_1'}, {'status': 'READY', 'url': 'file?path=%2Ftmp%2Ftest&name=input_file_2', 'name': 'input_file_2'}], 'last_change': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:241 fgapiserver get_task_app_id Found app_id: '1' for task_id: '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:418 fgapiserver load_user LoadUser: begin
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:421 fgapiserver load_user LoadUser: notoken is true
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:469 fgapiserverdb get_user_info_by_name select id        
+      ,name      
+      ,password  
+      ,first_name
+      ,last_name 
+      ,institute 
+      ,mail      
+      ,creation  
+      ,modified  
+from fg_user     
+where name=test;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+User 'test' info: '{'first_name': 'futuregateway', 'last_name': 'futuregateway', 'creation': '1970-01-01T00:00:00', 'name': 'futuregateway', 'institute': 'futuregateway', 'mail': 'futuregateway@futuregateway', 'password': 'XXXXYYYYZZZZ', 'id': '1', 'modified': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:427 fgapiserver load_user LoadUser: Session token disabled; behaving has user: 'futuregateway' (1)
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver_user.py:47 fgapiserver_user __init__ fgUser - id: '1' - name: 'futuregateway'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:1823 fgapiserver infra_id infrastructures(GET)/1: {}
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:350 fgapiserver authorize_user AuthUser: (begin)
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:361 fgapiserver authorize_user AuthUser: user_id: '1' - user_name: 'futuregateway'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:355 fgapiserverdb verify_user_role select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,fg_user_group ug  
+    ,fg_group_role gr  
+    ,fg_role        r  
+where u.id=1          
+  and u.id=ug.user_id  
+  and g.id=ug.group_id 
+  and g.id=gr.group_id 
+  and r.id=gr.role_id  
+  and r.name = infra_view;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+role(s) 'infra_view' for user_id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:367 fgapiserver authorize_user AuthUser: Auth for user '1' with roles 'infra_view' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2421 fgapiserverdb infra_exists select count(*)
+from infrastructure
+where id = 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure '1' exists is: True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2492 fgapiserverdb get_infra_record select app_id,
+       name,
+       description,
+       date_format(creation,
+                   '%Y-%m-%dT%TZ') creation,
+       enabled,
+       vinfra
+from infrastructure
+where id=1
+order by 1 asc ,2 asc
+limit 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2517 fgapiserverdb get_infra_record select pname
+      ,pvalue
+      ,pdesc
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure '1': '{'name': 'test infra', 'parameters': [{'name': 'test_pname1', 'value': 'test_pvalue1', 'description': 'test_pdesc1'}, {'name': 'test_pname2', 'value': 'test_pvalue2', 'description': 'test_pdesc2'}, {'name': 'test_pname3', 'value': 'test_pvalue3', 'description': None}], 'description': 'test infrastructure', 'creation': '1970-01-01T00:00:00', 'enabled': False, 'id': '1', 'virtual': False, 'app_id': '0'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:755 fgapiserver index index(GET): {}
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:418 fgapiserver load_user LoadUser: begin
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:421 fgapiserver load_user LoadUser: notoken is true
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:469 fgapiserverdb get_user_info_by_name select id        
+      ,name      
+      ,password  
+      ,first_name
+      ,last_name 
+      ,institute 
+      ,mail      
+      ,creation  
+      ,modified  
+from fg_user     
+where name=test;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+User 'test' info: '{'first_name': 'futuregateway', 'last_name': 'futuregateway', 'creation': '1970-01-01T00:00:00', 'name': 'futuregateway', 'institute': 'futuregateway', 'mail': 'futuregateway@futuregateway', 'password': 'XXXXYYYYZZZZ', 'id': '1', 'modified': '1970-01-01T00:00:00'}'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:427 fgapiserver load_user LoadUser: Session token disabled; behaving has user: 'futuregateway' (1)
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver_user.py:47 fgapiserver_user __init__ fgUser - id: '1' - name: 'futuregateway'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:1668 fgapiserver infrastructures infrastructures(POST): {}
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:350 fgapiserver authorize_user AuthUser: (begin)
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:361 fgapiserver authorize_user AuthUser: user_id: '1' - user_name: 'futuregateway'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:355 fgapiserverdb verify_user_role select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,fg_user_group ug  
+    ,fg_group_role gr  
+    ,fg_role        r  
+where u.id=1          
+  and u.id=ug.user_id  
+  and g.id=ug.group_id 
+  and g.id=gr.group_id 
+  and r.id=gr.role_id  
+  and r.name = infra_add;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+role(s) 'infra_add' for user_id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:367 fgapiserver authorize_user AuthUser: Auth for user '1' with roles 'infra_add' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserver.py:374 fgapiserver authorize_user AuthUser: User name 'futuregateway' differs from user 'None'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:355 fgapiserverdb verify_user_role select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,fg_user_group ug  
+    ,fg_group_role gr  
+    ,fg_role        r  
+where u.id=1          
+  and u.id=ug.user_id  
+  and g.id=ug.group_id 
+  and g.id=gr.group_id 
+  and r.id=gr.role_id  
+  and r.name = user_impersonate;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+role(s) 'user_impersonate' for user_id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:430 fgapiserverdb same_group select count(*)>1               
+from fg_user_group              
+where user_id = (select id      
+                 from fg_user   
+                 where name=futuregateway) 
+   or user_id = (select id      
+                 from fg_user   
+                 where name=None) 
+group by group_id               
+having count(*) > 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+same group for user 'futuregateway' and 'None' is True
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:355 fgapiserverdb verify_user_role select count(*)>0      
+from fg_user        u  
+    ,fg_group       g  
+    ,fg_user_group ug  
+    ,fg_group_role gr  
+    ,fg_role        r  
+where u.id=1          
+  and u.id=ug.user_id  
+  and g.id=ug.group_id 
+  and g.id=gr.group_id 
+  and r.id=gr.role_id  
+  and r.name = group_impersonate;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+role(s) 'group_impersonate' for user_id '1' is True'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2590 fgapiserverdb init_infra insert into infrastructure (id
+                           ,app_id
+                           ,name
+                           ,description
+                           ,creation
+                           ,enabled
+                           ,vinfra
+                           )
+select if(max(id) is NULL,1,max(id)+1)
+      ,0
+      ,Test infrastructure
+      ,Testinfrastructure description
+      ,now()
+      ,True
+      ,False
+from infrastructure;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2595 fgapiserverdb init_infra select max(id) from infrastructure;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure successfully created with id '1'
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2492 fgapiserverdb get_infra_record select app_id,
+       name,
+       description,
+       date_format(creation,
+                   '%Y-%m-%dT%TZ') creation,
+       enabled,
+       vinfra
+from infrastructure
+where id=1
+order by 1 asc ,2 asc
+limit 1;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:2517 fgapiserverdb get_infra_record select pname
+      ,pvalue
+      ,pdesc
+from infrastructure_parameter
+where infra_id=1
+order by param_id asc;
+20170913 13:19:04 DEBUG /home/futuregateway/devel/fgAPIServer/fgapiserverdb.py:150 fgapiserverdb query_done Query done message:
+Infrastructure '1': '{'name': 'test infra', 'parameters': [{'name': 'test_pname1', 'value': 'test_pvalue1', 'description': 'test_pdesc1'}, {'name': 'test_pname2', 'value': 'test_pvalue2', 'description': 'test_pdesc2'}, {'name': 'test_pname3', 'value': 'test_pvalue3', 'description': None}], 'description': 'test infrastructure', 'creation': '1970-01-01T00:00:00', 'enabled': False, 'id': '1', 'virtual': False, 'app_id': '0'}'

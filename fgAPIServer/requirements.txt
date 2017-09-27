@@ -1,0 +1,8 @@
+setuptools
+packaging
+pyOpenSSL
+flask
+flask-login
+MySQL-python
+pycrypto
+requests
