@@ -17,6 +17,7 @@ get_ts() {
 out() {
   # Get timestamp in TS variable  
   get_ts
+  TS="$TS "
 
   # Prepare output flags
   OUTCMD=echo
@@ -29,7 +30,7 @@ out() {
   if [ "$3" != "" -a $((1*NOTIMESTAMP)) -ne 0 ]; then
     TS=""
   fi
-  OUTMSG=$(echo $TS" "$MESSAGE)
+  OUTMSG=$(echo ${TS}${MESSAGE})
   $OUTCMD "$OUTMSG" >&1
   if [ "$FGLOG" != "" ]; then
     $OUTCMD "$OUTMSG" >> $FGLOG
@@ -38,10 +39,25 @@ out() {
 
 # Error function notify about errors
 err() {
+  # Get timestamp in TS variable
   get_ts
-  echo $TS" "$1 >&2 
+  TS="$TS "
+  
+  # Prepare output flags
+  OUTCMD=echo
+  MESSAGE="$1"
+  NONEWLINE="$2"
+  NOTIMESTAMP="$3"
+  if [ "$NONEWLINE" != "" -a $((1*NONEWLINE)) -ne 0 ]; then
+    OUTCMD=printf
+  fi
+  if [ "$3" != "" -a $((1*NOTIMESTAMP)) -ne 0 ]; then
+    TS=""
+  fi
+  OUTMSG=$(echo ${TS}${MESSAGE})
+  $OUTCMD "$OUTMSG" >&2
   if [ "$FGLOG" != "" ]; then
-    echo $TS" "$1 >> $FGLOG
+    $OUTCMD "$OUTMSG" >> $FGLOG
   fi
 }
 
@@ -118,6 +134,7 @@ check_envs() {
   RES=0
   ENV_VARS="$1"
   SKIP_VARS="$2"
+  NO_TS="$3"
   if [ "$ENV_VARS" = "" ]; then
     err "Sorry no variables found to check"
     RES=1
@@ -130,9 +147,9 @@ check_envs() {
         fi
     done
     eval ENV_VAL=\$$ENV_VAR
-    out "$ENV_VAR='"$ENV_VAL"'"
+    out "$ENV_VAR='"$ENV_VAL"'" 0 $NO_TS
     if [ "$ENV_VAL" = "" -a $VARTOSKIP -eq 0 ]; then
-        err "Found required variable $ENV_VAR empty!"
+        err "Found required variable $ENV_VAR empty!" 0 $NO_TS
         RES=1
     fi
   done

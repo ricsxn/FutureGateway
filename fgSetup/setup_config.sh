@@ -12,7 +12,7 @@
 # Setup log file
 FGLOG=$HOME/FutureGateway_setup.log            # If empty std-out only reporting for setup
 
-# FutureGateway relies totallyon Git repository for its intallation
+# FutureGateway relies totally on Git repository for its intallation
 # Each adopter may use its own forked sources, so that GIT repository must be configured
 # properly before to execute the setup
 GIT_HOST=https://github.com                   # Git repository host
@@ -20,6 +20,7 @@ GIT_RAWHOST=https://raw.githubusercontent.com # Host address for raw content
 GIT_REPO=ricsxn/FutureGateway                 # FutureGateway repositoty name
 GIT_BASE=$GIT_HOST/$GIT_REPO                  # GitHub base repository endpoint
 GIT_BASERAW=$GIT_RAWHOST/$GIT_REPO            # GitHub base for raw content
+GIT_TAG="master"                              # GitHub tag/branch name
 
 # Components setup configurations
 
@@ -36,8 +37,8 @@ FGDB_ROOTPWD=                        # Leave it empty for no password
 FGDB_USER=fgapiserver                # Database username
 FGDB_PASSWD=fgapiserver_password     # Database username password
 FGDB_SSHPORT=22                      # Database ssh port number
-FGDB_GITREPO=fgAPIServer             # Database Git repository name
-FGDB_GITTAG="minor_changes"          # Database Git repository tag/branch name
+FGDB_GITREPO=FutureGateway           # Database Git repository name
+FGDB_GITTAG="master"                 # Database Git repository tag/branch name
 FGDB_VARS=$(set | grep ^FGDB_ | awk -F"=" '{ print $1 }')
 
 # API front-end
@@ -57,17 +58,24 @@ FGAPISERVER_APPHOSTUNAME=futuregateway  # fgAPIServer host username
 FGAPISERVER_PORT=8888                   # fgAPIServer port number (no WSGI)
 FGAPISERVER_SSHPORT=22                  # fgAPIServer ssh port number
 FGAPISERVER_WSGI=1                      # 0 turn off WSGI configuration (apache)
-FGAPISERVER_GITREPO=fgAPIServer         # fgAPIServer Git repository name
+FGAPISERVER_GITREPO=FutureGateway       # fgAPIServer Git repository name
 FGAPISERVER_GITTAG="master"             # fgAPIServer Git repository tag/branch name
 FGAPISERVER_IOPATH=/tmp                 # fgAPIServer I/O sandbox directory
 FGAPISERVER_APIVER=1.0                  # FutureGateway API version implemented
 FGAPISERVER_DEBUG=True                  # Enable/Disable fgAPIServer debug mode
 FGAPISERVER_NOTOKEN=False               # Enable/Disable token mechanism
+FGAPISERVER_KEY=                        # Specify here a host certificate key
+FGAPISERVER_CRT=                        # Specify here a host certificate
+# PTV Settings
 FGAPISERVER_PTVFLAG=True                # Enable/Disable PTV (token mode on)
-FGAPISERVER_PTVUSER="tokenver_user"     # PTV HTTP access service username
-FGAPISERVER_PTVPASS="tokenver_pass"     # PTV HTTP service password
-FGAPISERVER_PTVENDPOINT="http://$FGAPISERVER_HOST:8889/checktoken" 
+FGAPISERVER_PTVUSER="tokenver_user"     # PTV basic auth username
+FGAPISERVER_PTVPASS="tokenver_pass"     # PTV basic auth password
+FGAPISERVER_PTVBASE="http://$FGAPISERVER_HOST:8889"
+FGAPISERVER_PTVENDPOINT="$FGAPISERVER_PTVBASE/checktoken" 
 FGAPISERVER_PTVMAPFILE="fgapiserver_ptvmap.json"
+[ "$FGAPISERVER_KEY" != "" -a "$FGAPISERVER_CRT" != "" ] && FGAPISERVER_SEC=1 || FGAPISERVER_SEC=0
+[ $FGAPISERVER_SEC -ne 0 ] && FGAPISERVER_PROTO="https://" || FGAPISERVER_PROTO="http://"
+FGAPISERVER_BASE=${FGAPISERVER_PROTO}${FGAPISERVER_HOST}:${FGAPISERVER_PORT}/${FGAPISERVER_APIVER}
 FGAPISERVER_VARS=$(set | grep ^FGAPISERVER_ | awk -F"=" '{ print $1 }')
 
 # APIServer
@@ -86,7 +94,7 @@ APISERVERDAEMON_HOST=127.0.0.1          # APIServerDaemon host address
 APISERVERDAEMON_HOSTUNAME=futuregateway # APIServerDaemon host username
 APISERVERDAEMON_PORT=8080               # APIServerDaemon port number
 APISERVERDAEMON_SSHPORT=22              # APIServerDaemon SSH port number
-APISERVERDAEMON_GITREPO=APIServerDaemon # fgAPIServer Git repository name
+APISERVERDAEMON_GITREPO=FutureGateway   # fgAPIServer Git repository name
 APISERVERDAEMON_GITTAG="master"         # fgAPIServer Git repository tag/branch name
 
 # GridnCloud Engine DB settings (GridnCloud Engine EI)
@@ -121,8 +129,8 @@ GNCENG_GIT_BASERAW=GNCENG_GIT_BASERAW=$GNCENG_GIT_RAWHOST/$GNCENG_GIT_REPO
 GNCENG_GITREPO="grid-and-cloud-engine"
 GNCENG_GITTAG="FutureGateway"
 
-# APIServerDaemon configuration settings
-# APIServerDaemon/web/WEB-INF/classes/it/infn/ct/APIServerDaemon.properties
+# APIServerDaemon configuration settings used to create
+# the .properties file: /web/WEB-INF/classes/it/infn/ct/APIServerDaemon.properties
 APISERVERDAEMON_MAXTHREADS=100                  # Maximum number of threads Action/Control queues
 APISERVERDAEMON_ASDCLOSETIMEOUT=20              # Waiting timeout before kill thread pools
 APISERVERDAEMON_GEPOLLINGDELAY=4000             # Action polling interval
@@ -138,12 +146,13 @@ APISERVERDAEMON_UTDB_USER=$UTDB_USER            # UsersTracking database user
 APISERVERDAEMON_UTDB_PASS=$UTDB_PASSWD          # UsersTracking database password
 APISERVERDAEMON_UTDB_NAME=$UTDB_NAME            # UsersTracking database name
 
-# ToscaIDC EI
-# APIServerDaemon/web/WEB-INF/classes/it/infn/ct/ToscaIDC.properties
+# ToscaIDC EI configuration settings used to create
+# the .properties file: APIServerDaemon/web/WEB-INF/classes/it/infn/ct/ToscaIDC.properties
 # Settings below are valid for baseline tester PTV service: fgapiserver_ptv.py
-TOSCAIDC_FGAPISRV_PTVENDPOINT=$FGAPISERVER_PTVENDPOINT # PTV service Endpoint
-TOSCAIDC_FGAPISRV_PTVUSER=$FGAPISERVER_PTVUSER         # PTV access username
-TOSCAIDC_FGAPISRV_PTVPASS=$FGAPISERVER_PTVPASS         # PTV access password
+TOSCAIDC_FGAPISRV_FRONTEND=$FGAPISERVER_BASE                 # PTV service endpoint
+TOSCAIDC_FGAPISRV_PTVTOKENSRV=$FGAPISERVER_PTVBASE/get-token # PTV get-token service 
+TOSCAIDC_FGAPISRV_PTVUSER=$FGAPISERVER_PTVUSER               # PTV access username
+TOSCAIDC_FGAPISRV_PTVPASS=$FGAPISERVER_PTVPASS               # PTV access password
 
 # APISERVERDAEMON Environment variables
 APISERVERDAEMON_ENVS=$(set | grep '^APISERVERDAEMON_\|^UTDB_\|^ROCCI_\|^GNCENG_\|^TOSCAIDC_' | awk -F"=" '{ print $1 }')

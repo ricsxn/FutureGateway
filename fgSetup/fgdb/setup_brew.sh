@@ -148,7 +148,7 @@ if [ $RES -eq 0 ]; then
        out "done" 0 1
        if [ $ASDBCOUNT -ne 0 ]; then
            # Database exists; determine version and patch
-           out "APIServerDatabase exists; deterimne its version ... " 1
+           out "APIServerDatabase exists; determine its version ... " 1
            ASDBVER=$(asdb "select version from db_patches order by 1 desc limit 1;")
            RES=$?
            if [ $RES -ne 0 ]; then
