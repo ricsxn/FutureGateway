@@ -387,10 +387,10 @@ out "--------------------------"
 out ""
 
 # Setup call chain
-#setup_PreRequisites && \
-#setup_CheckNodes && \
-#setup_CheckScripts && \
-#setup && \
+setup_PreRequisites && \
+setup_CheckNodes && \
+setup_CheckScripts && \
+setup && \
 out "FutureGateway installation terminated"
 
 
