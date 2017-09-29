@@ -89,7 +89,8 @@ install_brew() {
 # Setup brew (call must be done by an Admin user)
 check_and_setup_brew() {
     BREW=$(which brew)
-    [ "$BREW" = "" ] && /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    [ "$BREW" == "" ] && /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
+    brew -v 2>&1 >/dev/null
     RES=$?
     # In case brew already exists; following commands allow Admin group members to use it
     sudo chmod -R g+w /usr/local

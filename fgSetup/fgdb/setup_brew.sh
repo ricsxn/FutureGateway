@@ -45,10 +45,10 @@ out "Starting FutureGateway database brew versioned setup script"
 out "Verifying package manager and fgAPIServer user ..."
 
 # Check for brew and install it eventually
-check_and_setup_brew  
+check_and_setup_brew || exit 1
 
 # Check for FutureGateway fgAPIServer unix user
-check_and_create_user $FGDB_HOSTUNAME
+check_and_create_user $FGDB_HOSTUNAME || exit 1
 
 # Mandatory packages installation
 BREW=$(which brew)
@@ -66,8 +66,8 @@ BREWPACKAGES=(
   jq
   mysql
 )
-for pkg in ${BREWPACKAGES[@]}; do    
-    install_brew $pkg     
+for pkg in ${BREWPACKAGES[@]}; do
+    install_brew $pkg || exit 1
 done
 
 # Continue only if packages have been installed correctly
@@ -82,6 +82,7 @@ if [ $RES -eq 0 ]; then
         out "$(cat $STD_ERR)"
         out "Error:"
         out "$(cat $STD_ERR)"
+        exit 1
     else
         out "done" 0 1    
     fi

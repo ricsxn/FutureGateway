@@ -58,7 +58,7 @@ FGAPISERVER_APPHOSTUNAME=futuregateway  # fgAPIServer host username
 FGAPISERVER_PORT=8888                   # fgAPIServer port number (no WSGI)
 FGAPISERVER_SSHPORT=22                  # fgAPIServer ssh port number
 FGAPISERVER_WSGI=1                      # 0 turn off WSGI configuration (apache)
-FGAPISERVER_GITREPO=FutureGateway       # fgAPIServer Git repository name
+FGAPISERVER_GITREPO=                    # fgAPIServer Git repository name
 FGAPISERVER_GITTAG="master"             # fgAPIServer Git repository tag/branch name
 FGAPISERVER_IOPATH=/tmp                 # fgAPIServer I/O sandbox directory
 FGAPISERVER_APIVER=1.0                  # FutureGateway API version implemented
@@ -94,7 +94,7 @@ APISERVERDAEMON_HOST=127.0.0.1          # APIServerDaemon host address
 APISERVERDAEMON_HOSTUNAME=futuregateway # APIServerDaemon host username
 APISERVERDAEMON_PORT=8080               # APIServerDaemon port number
 APISERVERDAEMON_SSHPORT=22              # APIServerDaemon SSH port number
-APISERVERDAEMON_GITREPO=FutureGateway   # fgAPIServer Git repository name
+APISERVERDAEMON_GITREPO=                # fgAPIServer Git repository name
 APISERVERDAEMON_GITTAG="master"         # fgAPIServer Git repository tag/branch name
 
 # GridnCloud Engine DB settings (GridnCloud Engine EI)
@@ -182,7 +182,7 @@ FGPORTAL_LIFERAY62_DBUSER=lportal         # Liferay62 portal database user
 FGPORTAL_LIFERAY62_DBPASS=lportal         # Liferay62 portal database password
 FGPORTAL_LIFERAY62_DBNAME=lportal         # Liferay62 portal database name
 FGPORTAL_LIFERAY62_SDK=0                  # 0 turn off Liferay62 SDK installation
-FGPORTAL_LIFERAY62_GITREPO=PortalSetup    # Liferay62 Git repository name
+FGPORTAL_LIFERAY62_GITREPO=               # Liferay62 Git repository name
 FGPORTAL_LIFERAY62_GITTAG=master          # Liferay62 Git repository tag/branch name
 FGPORTAL_LIFERAY62_ENVS=$(set | grep ^FGPORTAL_LIFERAY62_ | awk -F"=" '{ print $1 }')
 
@@ -200,7 +200,7 @@ FGPORTAL_LIFERAY7_DBUSER=lportal         # Liferay7 portal database user
 FGPORTAL_LIFERAY7_DBPASS=lportal         # Liferay7 portal database password
 FGPORTAL_LIFERAY7_DBNAME=lportal         # Liferay7 portal database name
 FGPORTAL_LIFERAY7_SDK=0                  # 0 turn off Liferay7 SDK installation
-FGPORTAL_LIFERAY62_GITREPO=PortalSetup   # Liferay7 Git repository name
+FGPORTAL_LIFERAY62_GITREPO=              # Liferay7 Git repository name
 FGPORTAL_LIFERAY62_GITTAG=master         # Liferay7 Git repository tag/branch name
 FGPORTAL_LIFERAY7_ENVS=$(set | grep ^FGPORTAL_LIFERAY7_ | awk -F"=" '{ print $1 }')
 

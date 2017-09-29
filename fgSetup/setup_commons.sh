@@ -174,7 +174,7 @@ setup_config_vars() {
 #
 customize_common() {
   FGCOMMON_ENV="FGHOME\
-               FGLOCATION"
+                FGLOCATION"
   setup_config_vars $FGCOMMON_ENV
 }
 
